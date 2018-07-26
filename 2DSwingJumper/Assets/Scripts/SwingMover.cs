@@ -20,7 +20,7 @@ public class SwingMover : MonoBehaviour {
         transform.position = new Vector2(posX, posY);
         angle += Time.deltaTime*angularSpeed;
 
-        if (angle >= 1.7 && angularSpeed > 0 || angle <= -5)
+        if (angle >= 1.8 && angularSpeed > 0 || angle <= -5)
         {
             ChangeDirection();
             turnsCounter++;
@@ -36,7 +36,7 @@ public class SwingMover : MonoBehaviour {
         if(angularSpeed>0)
             angularSpeed = Random.Range(1.5f, 5f);
         else
-            angularSpeed = Random.Range(-5f, -1.5f);
+            angularSpeed = Random.Range(-4.9f, -1.5f);
     }
     public void ChangeDirection()
     {

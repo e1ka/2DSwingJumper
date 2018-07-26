@@ -51,6 +51,7 @@ public class PlayerMover : MonoBehaviour
     {
         if (other.gameObject.tag == "Swing")
         {
+            rb.freezeRotation = false;
             gameController.GameOver();
             gameOver = true;
         }
