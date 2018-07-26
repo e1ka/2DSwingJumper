@@ -10,25 +10,26 @@ public class SwingMover : MonoBehaviour {
     public float rotationRadius = 3f;
     public int turnsInMode;
     float posX, posY = 0f;
-    float angle = 1.7f;
+    public float angle = 0f;
 
-    public int turnsCounter = 0;
+    public int turnsCounter = 1;
 
 	void Update () {
-        posX = centerPoint.position.x + Mathf.Cos(angle) * rotationRadius;
-        posY = centerPoint.position.y + Mathf.Sin(angle) * rotationRadius;
+        posX = centerPoint.position.x + Mathf.Cos(angle + 1.5f) * rotationRadius;
+        posY = centerPoint.position.y + Mathf.Sin(angle + 1.5f) * rotationRadius;
         transform.position = new Vector2(posX, posY);
         angle += Time.deltaTime*angularSpeed;
 
-        if (angle >= 1.8 && angularSpeed > 0 || angle <= -5)
+        if (Mathf.Abs(angle) >= 6.3f)
         {
-            ChangeDirection();
-            turnsCounter++;
             if (turnsCounter % turnsInMode == 0)
             {
                 ChangeSpeed();
+                ChangeDirection();
                 turnsCounter = 0;
             }
+            turnsCounter++;
+            angle = 0;
         }
     }
     public void ChangeSpeed()
