@@ -5,9 +5,14 @@ using UnityEngine;
 public class SwingMover : MonoBehaviour {
     [SerializeField]
     Transform centerPoint;
-    public float rotationRadius = 3f, angularSpeed = 2f;
+    [SerializeField]
+    float angularSpeed = 2f;
+    public float rotationRadius = 3f;
+    public int turnsInMode;
     float posX, posY = 0f;
-    float angle = 1.6f;
+    float angle = 1.7f;
+
+    public int turnsCounter = 0;
 
 	void Update () {
         posX = centerPoint.position.x + Mathf.Cos(angle) * rotationRadius;
@@ -15,11 +20,26 @@ public class SwingMover : MonoBehaviour {
         transform.position = new Vector2(posX, posY);
         angle += Time.deltaTime*angularSpeed;
 
-        if (Mathf.Abs(angle) >= 6.3f)
-            angle = 0f;
+        if (angle >= 1.7 && angularSpeed > 0 || angle <= -5)
+        {
+            ChangeDirection();
+            turnsCounter++;
+            if (turnsCounter % turnsInMode == 0)
+            {
+                ChangeSpeed();
+                turnsCounter = 0;
+            }
+        }
     }
     public void ChangeSpeed()
     {
-        angularSpeed = Random.Range(1.5f, 5f);
+        if(angularSpeed>0)
+            angularSpeed = Random.Range(1.5f, 5f);
+        else
+            angularSpeed = Random.Range(-5f, -1.5f);
+    }
+    public void ChangeDirection()
+    {
+        angularSpeed = -angularSpeed;
     }
 }

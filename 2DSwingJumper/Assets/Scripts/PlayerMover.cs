@@ -6,14 +6,12 @@ public class PlayerMover : MonoBehaviour
 {
     [Range(1, 10)]
     public float jumpVelocity, fallMultiplier;
-    public GameObject gameControllerObject, swingObject;
+    public GameObject gameControllerObject;
     public LayerMask groundLayer;
 
     private GameController gameController;
-    private SwingMover swingMover;
     private Rigidbody2D rb;
     private bool gameOver;
-    private int scoreCounter = 0;
 
     bool IsGrounded()
     {
@@ -36,7 +34,6 @@ public class PlayerMover : MonoBehaviour
     void Start()
     {
         gameController = gameControllerObject.GetComponent<GameController>();
-        swingMover = swingObject.GetComponent<SwingMover>();
     }
     void Update()
     {
@@ -44,23 +41,11 @@ public class PlayerMover : MonoBehaviour
         {
             rb.velocity = Vector2.up * jumpVelocity;
             gameController.AddScore(10);
-            scoreCounter++;
         }
         if(rb.velocity.y < 0)
         {
             rb.velocity += Vector2.up * Physics2D.gravity.y * fallMultiplier * Time.deltaTime;
         }
-    }
-    void FixedUpdate()
-    {
-            if (scoreCounter % 4 == 0)
-            {
-                if (Input.GetKeyUp(KeyCode.Space))
-                {
-                    swingMover.ChangeSpeed();
-                    scoreCounter = 0;
-                }
-            }
     }
     void OnCollisionEnter2D(Collision2D other)
     {
