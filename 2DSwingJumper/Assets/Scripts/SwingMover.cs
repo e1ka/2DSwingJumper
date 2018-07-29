@@ -13,7 +13,7 @@ public class SwingMover : MonoBehaviour {
 
     public int turnsLeft, turnsRight, cyclesInMode;
     float leftSpeed, rightSpeed;
-    bool rightDir = true;
+    bool rightDir = false;
 
     public int turnsCounter = 1;
     public int cyclesCounter = 1;
@@ -66,10 +66,10 @@ public class SwingMover : MonoBehaviour {
     }
     void ChangeDirection()
     {
-        if (angularSpeed == leftSpeed)
+        if (!rightDir)
         {
-            rightDir = true;
             angularSpeed = rightSpeed;
+            rightDir = true;
         }
         else
         {
