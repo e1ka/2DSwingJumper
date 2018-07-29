@@ -8,11 +8,21 @@ public class SwingMover : MonoBehaviour {
     [SerializeField]
     float angularSpeed = 2f;
     public float rotationRadius = 3f;
-    public int turnsInMode;
     float posX, posY = 0f;
     public float angle = 0f;
 
+    public int turnsLeft, turnsRight, cyclesInMode;
+    float leftSpeed, rightSpeed;
+    bool rightDir = true;
+
     public int turnsCounter = 1;
+    public int cyclesCounter = 1;
+
+    void Start()
+    {
+        leftSpeed = RandomSpeed();
+        rightSpeed = -RandomSpeed();
+    }
 
 	void Update () {
         posX = centerPoint.position.x + Mathf.Cos(angle + 1.5f) * rotationRadius;
@@ -20,27 +30,52 @@ public class SwingMover : MonoBehaviour {
         transform.position = new Vector2(posX, posY);
         angle += Time.deltaTime*angularSpeed;
 
-        if (Mathf.Abs(angle) >= 6.3f)
-        {
-            if (turnsCounter % turnsInMode == 0)
+            if (Mathf.Abs(angle) >= 6.3f)
             {
-                ChangeSpeed();
-                ChangeDirection();
-                turnsCounter = 0;
+                if (rightDir && turnsCounter % turnsRight == 0)
+                {
+                    ChangeDirection();
+                    cyclesCounter++;
+                }
+                else if (!rightDir && turnsCounter % turnsLeft == 0)
+                {
+                    ChangeDirection();
+                }
+                angle = 0;
+                if (cyclesCounter % (cyclesInMode + 1) == 0)
+                    NewMode();
+                turnsCounter++;
             }
-            turnsCounter++;
-            angle = 0;
+    }
+    void NewMode()
+    {
+        cyclesCounter = 1;
+        turnsLeft = RandomTurns();
+        turnsRight = RandomTurns();
+        leftSpeed = RandomSpeed();
+        rightSpeed = -RandomSpeed();
+        ChangeDirection();
+    }
+    int RandomTurns()
+    {
+        return Random.Range(1, 5);
+    }
+    float RandomSpeed()
+    {
+        return Random.Range(1.5f, 4.9f);
+    }
+    void ChangeDirection()
+    {
+        if (angularSpeed == leftSpeed)
+        {
+            rightDir = true;
+            angularSpeed = rightSpeed;
         }
-    }
-    public void ChangeSpeed()
-    {
-        if(angularSpeed>0)
-            angularSpeed = Random.Range(1.5f, 5f);
         else
-            angularSpeed = Random.Range(-4.9f, -1.5f);
-    }
-    public void ChangeDirection()
-    {
-        angularSpeed = -angularSpeed;
+        {
+            angularSpeed = leftSpeed;
+            rightDir = false;
+        }
+        turnsCounter = 0;
     }
 }

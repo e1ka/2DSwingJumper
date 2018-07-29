@@ -40,7 +40,7 @@ public class PlayerMover : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && IsGrounded() && !gameOver)
         {
             rb.velocity = Vector2.up * jumpVelocity;
-            gameController.AddScore(10);
+            gameController.AddScore(1);
         }
         if(rb.velocity.y < 0)
         {
