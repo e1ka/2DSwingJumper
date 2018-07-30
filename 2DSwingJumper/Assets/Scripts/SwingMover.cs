@@ -54,7 +54,6 @@ public class SwingMover : MonoBehaviour {
         turnsRight = RandomTurns();
         leftSpeed = RandomSpeed();
         rightSpeed = -RandomSpeed();
-        ChangeDirection();
     }
     int RandomTurns()
     {
