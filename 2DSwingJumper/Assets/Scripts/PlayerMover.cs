@@ -8,6 +8,7 @@ public class PlayerMover : MonoBehaviour
     public float jumpVelocity, fallMultiplier;
     public GameObject gameControllerObject;
     public LayerMask groundLayer;
+    public Animator playerAnimator;
 
     private GameController gameController;
     private Rigidbody2D rb;
@@ -41,6 +42,7 @@ public class PlayerMover : MonoBehaviour
         {
             rb.velocity = Vector2.up * jumpVelocity;
             gameController.AddScore(1);
+            playerAnimator.Play("Jump");
         }
         if(rb.velocity.y < 0)
         {
