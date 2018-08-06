@@ -4,10 +4,14 @@ using UnityEngine;
 
 public class PlayerMover : MonoBehaviour
 {
+    [Header("Jump")]
+    public LayerMask groundLayer;
+    public float groundDistance = 1.5f;
     [Range(1, 10)]
     public float jumpVelocity, fallMultiplier;
+
+    [Header("References")]
     public GameObject gameControllerObject;
-    public LayerMask groundLayer;
     public Animator playerAnimator;
 
     private GameController gameController;
@@ -18,8 +22,7 @@ public class PlayerMover : MonoBehaviour
     {
         Vector2 position = transform.position;
         Vector2 direction = Vector2.down;
-        float distance = 1.5f;
-        RaycastHit2D hit = Physics2D.Raycast(position, direction, distance, groundLayer);
+        RaycastHit2D hit = Physics2D.Raycast(position, direction, groundDistance, groundLayer);
         if (hit.collider != null)
         {
             return true;
@@ -54,6 +57,7 @@ public class PlayerMover : MonoBehaviour
         if (other.gameObject.tag == "Swing")
         {
             rb.freezeRotation = false;
+            playerAnimator.Play("Death");
             gameController.GameOver();
             gameOver = true;
         }

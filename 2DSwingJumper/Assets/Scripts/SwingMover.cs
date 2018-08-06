@@ -3,25 +3,28 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class SwingMover : MonoBehaviour {
+    [Header ("Circle movement")]
+    public float rotationRadius = 3f;
+    public float angle = 0f;
+    public bool rightDir = false;
     [SerializeField]
     Transform centerPoint;
     [SerializeField]
-    float angularSpeed = 2f;
-    public float rotationRadius = 3f;
-    float posX, posY = 0f;
-    public float angle = 0f;
+    float angularSpeed;
 
-    public int turnsLeft, turnsRight, cyclesInMode;
-    float leftSpeed, rightSpeed;
-    bool rightDir = false;
-
+    [Header ("Mode info")]
     public int turnsCounter = 1;
     public int cyclesCounter = 1;
+    public int turnsLeft, turnsRight, cyclesInMode;
+    public float leftSpeed, rightSpeed;
+
+    float posX, posY = 0f;
 
     void Start()
     {
         leftSpeed = RandomSpeed();
         rightSpeed = -RandomSpeed();
+        angularSpeed = leftSpeed;
     }
 
 	void Update () {
