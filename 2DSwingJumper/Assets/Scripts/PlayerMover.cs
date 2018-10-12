@@ -41,7 +41,7 @@ public class PlayerMover : MonoBehaviour
     }
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && IsGrounded() && !gameOver)
+        if (Input.GetMouseButtonDown(0) && IsGrounded() && !gameOver)
         {
             rb.velocity = Vector2.up * jumpVelocity;
             gameController.AddScore(1);

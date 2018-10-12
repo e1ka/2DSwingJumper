@@ -1,21 +1,22 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameController : MonoBehaviour {
 
-    public Text scoreText, highScoreText, gameOver;
-
-    private bool gameover, restart;
+    public Text scoreText, highScoreText, newHighScoreText;
+    public GameObject gameOverObj;
+    
     private int score, highScore;
+
+    private bool newHighScore = false;
 
 	void Start ()
     {
         highScore = PlayerPrefs.GetInt("HighScore", 0);
         DisplayHighScore();
-        gameover = false;
-        restart = false;
         score = 0;
         UpdateScore();
     }
@@ -33,6 +34,8 @@ public class GameController : MonoBehaviour {
             highScore = score;
             PlayerPrefs.SetInt("HighScore", score);
             DisplayHighScore();
+            if (!newHighScore)
+                newHighScore = true;
         }
             
     }
@@ -43,7 +46,18 @@ public class GameController : MonoBehaviour {
     }
     public void GameOver()
     {
-        gameOver.text = "GAME OVER";
-        gameover = true;
+        gameOverObj.SetActive(true);
+        if (newHighScore)
+        {
+            newHighScoreText.text = "NEW HIGHSCORE!";
+        }
+    }
+    public void TryAgain()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+    public void MainMenu()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
     }
 }
